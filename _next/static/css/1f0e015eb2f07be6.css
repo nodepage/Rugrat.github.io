@@ -33277,8 +33277,7 @@ body {
     }
 
     body {
-        background: url(https://ratsonsol.com/bg__main-mb.64532b1e.webp) no-repeat center 0 #010101 !important;
-        background-size: 100% auto !important
+        background: url(../media/bg__main-mb.64532b1e.webp) no-repeat center/cover #010101 !important;
     }
 
     [class^=Layout] .slick-dots li {
