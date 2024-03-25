@@ -44,6 +44,7 @@ p#ref {
 }
 
 p#success {
+    margin-top: 20px;
     letter-spacing: 0.1px;
     /* text-decoration-style: double; */
     text-transform: capitalize;
@@ -53,6 +54,20 @@ p#success {
 p#ratu {
     margin-top: 20px;
     font-size: 18px;
+}
+
+p#TwitterBtn {
+    margin-top: 20px;
+    background: #3c58c8;
+    width: 190px;
+    margin-right: auto;
+    margin-left: auto;
+    color: white;
+    height: 25px;
+    font-weight: 500;
+    border-radius: 50px;
+    cursor: pointer;
+    /* padding: 0px 20px; */
 }
 
 textarea#Inputref {

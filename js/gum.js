@@ -280,6 +280,22 @@ function validateInputs() {
     });
 
     
+    let Newparagraph6 = document.createElement("p");
+    let imageElement = document.createElement("img");
+    imageElement.src = "./twitter.png";
+    var old = document.getElementById("success");
+    Newparagraph6.appendChild(imageElement);
+
+    Newparagraph6.textContent = "Share on Twitter";
+    Newparagraph6.setAttribute("id", "TwitterBtn");
+    old.appendChild(Newparagraph6);
+
+    Newparagraph6.addEventListener("click", function () {
+
+      
+      window.open(`
+      http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`, "_blank")
+    });
 
     if (false) {
       //featch data
