@@ -55,6 +55,32 @@ p#ratu {
     font-size: 18px;
 }
 
+textarea#Inputref {
+    /* width: 50%; */
+    padding: 4px 15px;
+    outline: none;
+}
+p#CopyBtn {
+    background: red;
+    width: 90px;
+    margin: auto;
+    color: white;
+    height: 29px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+p#sharetxt {
+    font-weight: 500;
+    margin-top: 28px;
+    color: #565555;
+}
+
+input#Inputref [type=text] {
+    padding: 10px;
+}
+
 #shareref{
     margin-top: 20px;
 }

@@ -7,6 +7,7 @@ var retweetz = false;
 var teleConf = false;
 var addConf = false;
 var referrals = 0;
+var referralId = null;
 
 var xClickedz = false;
 var tClickedz = false;
@@ -32,7 +33,7 @@ var retweetWarn = document.getElementById("xwarning");
 var telUserWarn = document.getElementById("tuserWarning");
 var clearTask = document.getElementById("taskz");
 var closeTask = document.getElementById("mover");
-var Giveaway = document.getElementById('givez')
+var Giveaway = document.getElementById("givez");
 
 //   airdropBtn.addEventListener("click", function (event) {
 //     event.preventDefault()
@@ -203,7 +204,7 @@ function validateInputs() {
     // Proceed with your logic here
     //addValue is the Address number
 
-    Giveaway.innerHTML = "Successfully Participated"
+    Giveaway.innerHTML = "Successfully Participated";
     clearTask.style.display = "none";
     closeTask.style.display = "none";
 
@@ -221,7 +222,6 @@ function validateInputs() {
 
     form.appendChild(paragraph);
 
-
     let Newparagraph = document.createElement("p");
     var old = document.getElementById("success");
     let strongElement2 = document.createElement("strong");
@@ -230,7 +230,6 @@ function validateInputs() {
     Newparagraph.appendChild(document.createTextNode(" 5000 $RAT"));
     Newparagraph.setAttribute("id", "ratu");
     old.appendChild(Newparagraph);
-
 
     let Newparagraph2 = document.createElement("p");
     var old = document.getElementById("success");
@@ -249,8 +248,38 @@ function validateInputs() {
     Newparagraph3.setAttribute("id", "shareref");
     old.appendChild(Newparagraph3);
 
+    let Newparagraph4 = document.createElement("p");
+    var old = document.getElementById("success");
+    Newparagraph4.textContent = "Share your referral link:";
+    Newparagraph4.setAttribute("id", "sharetxt");
+    old.appendChild(Newparagraph4);
 
-    // Append the paragraph to the body of the document
+    let inputElement = document.createElement("textarea");
+    inputElement.setAttribute("type", "text");
+    inputElement.setAttribute("name", "Refinput");
+    inputElement.setAttribute("id", "Inputref");
+    inputElement.readOnly = true;
+    // Make the textarea resizable
+    inputElement.style.resize = "both";
+    inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${referralId}`;
+    old.appendChild(inputElement);
+
+    let Newparagraph5 = document.createElement("p");
+    var old = document.getElementById("success");
+    Newparagraph5.textContent = "Copy";
+    Newparagraph5.setAttribute("id", "CopyBtn");
+    old.appendChild(Newparagraph5);
+
+    Newparagraph5.addEventListener("click", function () {
+      var copyText = document.querySelector("#Inputref"); 
+    copyText.select(); document.execCommand("copy");
+    noti.style.display = "block"
+    setTimeout(function() {
+      noti.style.display = "none"
+    }, 1500);
+    });
+
+    
 
     if (false) {
       //featch data
