@@ -39,6 +39,22 @@ input {
     color: white;
 }
 
+p#success {
+    letter-spacing: 0.1px;
+    /* text-decoration-style: double; */
+    text-transform: capitalize;
+    font-size: 16px;
+}
+
+p#ratu {
+    margin-top: 10px;
+    font-size: 18px;
+}
+
+/* #mover{
+    display: none;
+} */
+
 /* .mt-3 {
     display: flex;
     align-items: center;
