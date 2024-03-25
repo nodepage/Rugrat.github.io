@@ -1,3 +1,11 @@
+var xClickz = document.getElementById('xicon')
+
+xClickz.addEventListener("click", function () {
+  alert("Hello")
+});
+
+
+
 let lastScrollTop = 0;
 
 var navbar = document.getElementById("header_sticky");
