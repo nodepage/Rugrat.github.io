@@ -9,6 +9,41 @@ var addConf = false;
 var referrals = 0;
 var referralId = null;
 
+window.addEventListener("load", function () {
+  let currentURL = window.location.href;
+  console.log(currentURL);
+
+  let url = currentURL;
+
+  if (currentURL == null) {
+
+  } else {
+    // Create a URLSearchParams object from the URL's query string
+    let searchParams = new URLSearchParams(url.split("?")[1]);
+
+    // Get the value of the 'referral_id' parameter
+    let referralz = searchParams.get("referral_id");
+    referralId = referralz;
+
+    let existingData = localStorage.getItem('Data');
+
+    if (existingData === null) {
+      // Parse the existing data (assuming it's JSON)
+      existingData = JSON.parse(existingData);
+    
+      // Update the 'referrals' value
+      existingData.referrals += 1;
+    
+      // Save the updated data back to localStorage
+      localStorage.setItem('Data', JSON.stringify(existingData));
+    
+      console.log('Referrals increased successfully:', existingData);
+  }else{
+    
+  }
+}
+});
+
 var xClickedz = false;
 var tClickedz = false;
 
@@ -204,6 +239,16 @@ function validateInputs() {
     // Proceed with your logic here
     //addValue is the Address number
 
+    
+
+    let myData = localStorage.getItem('Data');
+
+      myData = JSON.parse(myData)
+
+    
+
+      console.log(myData)
+
     Giveaway.innerHTML = "Successfully Participated";
     clearTask.style.display = "none";
     closeTask.style.display = "none";
@@ -214,7 +259,7 @@ function validateInputs() {
     strongElement.textContent = "Referrals ID:";
     paragraph.appendChild(strongElement);
 
-    paragraph.appendChild(document.createTextNode(" SSSSSSS"));
+    paragraph.appendChild(document.createTextNode(` ${myData.referralId}`));
 
     paragraph.setAttribute("id", "success");
 
@@ -236,7 +281,7 @@ function validateInputs() {
     let strongElement3 = document.createElement("strong");
     strongElement3.textContent = "Referrals : ";
     Newparagraph2.appendChild(strongElement3);
-    Newparagraph2.appendChild(document.createTextNode(` ${referrals}`));
+    Newparagraph2.appendChild(document.createTextNode(` ${myData.referrals}`));
     Newparagraph2.setAttribute("id", "ref");
     old.appendChild(Newparagraph2);
 
@@ -261,7 +306,7 @@ function validateInputs() {
     inputElement.readOnly = true;
     // Make the textarea resizable
     inputElement.style.resize = "both";
-    inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${referralId}`;
+    inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${myData.referralId}`;
     old.appendChild(inputElement);
 
     let Newparagraph5 = document.createElement("p");
@@ -271,15 +316,15 @@ function validateInputs() {
     old.appendChild(Newparagraph5);
 
     Newparagraph5.addEventListener("click", function () {
-      var copyText = document.querySelector("#Inputref"); 
-    copyText.select(); document.execCommand("copy");
-    noti.style.display = "block"
-    setTimeout(function() {
-      noti.style.display = "none"
-    }, 1500);
+      var copyText = document.querySelector("#Inputref");
+      copyText.select();
+      document.execCommand("copy");
+      noti.style.display = "block";
+      setTimeout(function () {
+        noti.style.display = "none";
+      }, 1500);
     });
 
-    
     let Newparagraph6 = document.createElement("p");
     let imageElement = document.createElement("img");
     imageElement.src = "./twitter.png";
@@ -291,19 +336,28 @@ function validateInputs() {
     old.appendChild(Newparagraph6);
 
     Newparagraph6.addEventListener("click", function () {
-
-      
-      window.open(`
-      http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`, "_blank")
+      window.open(
+        `
+      http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`,
+        "_blank"
+      );
     });
 
     if (false) {
+      alert('SEEEEE')
+      
       //featch data
     } else {
+      if (localStorage.getItem("Data") !== null) {
+        let shortUUID = generateShortUUID();
+        referralId = shortUUID;
+      }
+      let shortUUID = generateShortUUID();
       var data = {
         address: addValue,
         telegram: telUsername,
         referrals: referrals,
+        referralId: shortUUID,
       };
 
       let jsonString = JSON.stringify(data); //Json covert data
@@ -313,3 +367,10 @@ function validateInputs() {
   }
 }
 
+function generateShortUUID() {
+  let uuid = "";
+  for (let i = 0; i < 10; i++) {
+    uuid += Math.floor(Math.random() * 16).toString(16);
+  }
+  return uuid;
+}
