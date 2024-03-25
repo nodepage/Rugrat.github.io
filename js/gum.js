@@ -20,7 +20,7 @@ xClickz.addEventListener("click", function () {
 });
 
 tClickz.addEventListener("click", function () {
-    alert('clicked Telegram')
+    
 
     tClickedz = true
     tWarn.style.display ='none'
@@ -85,6 +85,7 @@ airdropBtn.addEventListener("click", function (event) {
     var addValue = document.getElementById('id_solana_wallet').value
     var addWarn = document.getElementById('addwarning')
     
+  
     if(xClickedz ){
        
 
@@ -100,6 +101,7 @@ airdropBtn.addEventListener("click", function (event) {
 
                     if(addValue.length > 30){
                         addConf = true
+
                     }
                     else{
                         addWarn.innerHTML = "Please Enter a valid Address"
@@ -126,7 +128,10 @@ airdropBtn.addEventListener("click", function (event) {
        
     }
 
+
     if(retweetz){retweetWarn.style.display = "none"}
     if(teleConf){telUserWarn.style.display = "none"}
     if(addConf){addWarn.style.display = "none"}
+
+
   });
