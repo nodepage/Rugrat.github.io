@@ -78,60 +78,145 @@ tClickz.addEventListener("click", function () {
 //   });
 
 
-airdropBtn.addEventListener("click", function (event) {
-    event.preventDefault()
-    var retweetUrl = document.getElementById('id_quote_retweet_link').value.length
-    var telUsername = document.getElementById('id_telegram_username').value
-    var addValue = document.getElementById('id_solana_wallet').value
-    var addWarn = document.getElementById('addwarning')
+// airdropBtn.addEventListener("click", function (event) {
+//     event.preventDefault()
+//     var retweetUrl = document.getElementById('id_quote_retweet_link').value.length
+//     var telUsername = document.getElementById('id_telegram_username').value
+//     var addValue = document.getElementById('id_solana_wallet').value
+//     var addWarn = document.getElementById('addwarning')
     
   
-    if(xClickedz ){
+//     if(xClickedz ){
        
 
-        if( retweetUrl > 40 ){
+//         if( retweetUrl > 40 ){
            
-           retweetz = true
+//            retweetz = true
 
-            if (tClickedz){
+//             if (tClickedz){
                 
 
-                if(telUsername.length > 3){
-                    teleConf = true
+//                 if(telUsername.length > 3){
+//                     teleConf = true
 
-                    if(addValue.length > 30){
-                        addConf = true
+//                     if(addValue.length > 30){
+//                         addConf = true
 
-                    }
-                    else{
-                        addWarn.innerHTML = "Please Enter a valid Address"
-                    }
-                }else{
-                    telUserWarn.innerHTML = 'Please Enter a valid username'
-                }
+//                     }
+//                     else{
+//                         addWarn.innerHTML = "Please Enter a valid Address"
+//                     }
+//                 }else{
+//                     telUserWarn.innerHTML = 'Please Enter a valid username'
+//                 }
 
                
-            }else{
-                tWarn.innerHTML = 'You have not Join our Telegram community'
+//             }else{
+//                 tWarn.innerHTML = 'You have not Join our Telegram community'
                 
                 
-            }
-        }else{
-            retweetWarn.innerHTML = "Please Enter a valid link"
-            console.log(retweetUrl)
+//             }
+//         }else{
+//             retweetWarn.innerHTML = "Please Enter a valid link"
+//             console.log(retweetUrl)
 
-        }
+//         }
 
         
-    }else{
-        xWarn.innerHTML='ERROR! You have not Follow us on Twitter'
+//     }else{
+//         xWarn.innerHTML='ERROR! You have not Follow us on Twitter'
        
+//     }
+
+
+//     if(retweetz){retweetWarn.style.display = "none"}
+//     if(teleConf){telUserWarn.style.display = "none"}
+//     if(addConf){addWarn.style.display = "none"}
+
+
+//   });
+
+
+// Add event listeners to input fields for validation on change
+document.getElementById('id_quote_retweet_link').addEventListener('input', function () {
+    validateInputs();
+});
+
+document.getElementById('id_telegram_username').addEventListener('input', function () {
+    validateInputs();
+});
+
+document.getElementById('id_solana_wallet').addEventListener('input', function () {
+    validateInputs();
+});
+
+// Event listener for the airdropBtn click event
+airdropBtn.addEventListener('click', function (event) {
+    event.preventDefault();
+    validateInputs();
+});
+
+// Function to validate inputs
+function validateInputs() {
+    var retweetUrl = document.getElementById('id_quote_retweet_link').value.trim();
+    var telUsername = document.getElementById('id_telegram_username').value.trim();
+    var addValue = document.getElementById('id_solana_wallet').value.trim();
+    var addWarn = document.getElementById('addwarning');
+
+    var retweetWarn = document.getElementById('xwarning');
+    var tWarn = document.getElementById('twarning');
+    var xWarn = document.getElementById('xfollw-warning');
+    var telUserWarn = document.getElementById('tuserWarning');
+
+    var retweetz = false;
+    var teleConf = false;
+    var addConf = false;
+
+    if(!xClickedz ){
+        xWarn.innerHTML='ERROR! You have not Follow us on Twitter'
     }
 
+    
+    
 
-    if(retweetz){retweetWarn.style.display = "none"}
-    if(teleConf){telUserWarn.style.display = "none"}
-    if(addConf){addWarn.style.display = "none"}
+    if (retweetUrl.length > 40) {
+        retweetz = true;
+        retweetWarn.style.display = 'none';
+    } else {
+        retweetz = false;
+        retweetWarn.innerHTML = 'Please enter a valid link';
+        retweetWarn.style.display = 'block';
+    }
 
+    if(!tClickedz){
+        tWarn.innerHTML = 'You have not Join our Telegram community'
+    }
 
-  });
+    if (telUsername.length > 3) {
+        teleConf = true;
+        telUserWarn.style.display = 'none';
+    } else {
+        teleConf = false;
+        telUserWarn.innerHTML = 'Please enter a valid username';
+        telUserWarn.style.display = 'block';
+    }
+
+    if (addValue.length > 30) {
+        addConf = true;
+        addWarn.style.display = 'none';
+    } else {
+        addConf = false;
+        addWarn.innerHTML = 'Please enter a valid address';
+        addWarn.style.display = 'block';
+    }
+
+    // Check if all validations pass
+    if (xClickedz && tClickedz && retweetz && teleConf && addConf) {
+        // Proceed with your logic here
+       if(){
+
+       }else{
+        
+       }
+    }
+}
