@@ -232,6 +232,23 @@ function validateInputs() {
     old.appendChild(Newparagraph);
 
 
+    let Newparagraph2 = document.createElement("p");
+    var old = document.getElementById("success");
+    let strongElement3 = document.createElement("strong");
+    strongElement3.textContent = "Referrals : ";
+    Newparagraph2.appendChild(strongElement3);
+    Newparagraph2.appendChild(document.createTextNode(` ${referrals}`));
+    Newparagraph2.setAttribute("id", "ref");
+    old.appendChild(Newparagraph2);
+
+    let Newparagraph3 = document.createElement("p");
+    var old = document.getElementById("success");
+    let strongElement4 = document.createElement("strong");
+    strongElement4.textContent = "Share Referral Link :";
+    Newparagraph3.appendChild(strongElement4);
+    Newparagraph3.setAttribute("id", "shareref");
+    old.appendChild(Newparagraph3);
+
 
     // Append the paragraph to the body of the document
 
