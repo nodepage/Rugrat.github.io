@@ -41,31 +41,73 @@ window.addEventListener("load", function () {
   console.log(currentURL);
 
   let url = currentURL;
+  let searchParams = new URLSearchParams(url.split("?")[1]);
 
-  if (currentURL == null) {
+  // Get the value of the 'referral_id' parameter
+  let referralz = searchParams.get("referral_id");
+
+  console.log("CurrentURRRRL",referralz !== null)
+
+
+  if (referralz !== null) {
+   
+    
+    
+    console.log("MIDO", typeof referralz)
+
+    const q = query(
+      ref(database, "users/"),
+      orderByChild("referralId"),
+      equalTo(referralz)
+    );
+    console.log("MIDO2", referralz)
+
+    get(q).then((snapshot) => {
+      console.log(snapshot.val());
+      console.log(typeof snapshot.val());
+      let currentUserz = snapshot.val();
+
+      var tappy = `Data-${referralz}`
+
+      console.log("KUKUKUK", currentUserz)
+
+
+      if (localStorage.getItem(tappy) === null) {
+        localStorage.setItem(tappy, JSON.stringify(currentUserz));
+      } else {
+        console.log("Local storage is not empty");
+      }
+      console.log("URL REF", referralz)
+    });
+    
+    
   } else {
-    // Create a URLSearchParams object from the URL's query string
-    let searchParams = new URLSearchParams(url.split("?")[1]);
 
-    // Get the value of the 'referral_id' parameter
-    let referralz = searchParams.get("referral_id");
-    referralId = referralz;
+    console.log("URL DO NOT HAVE ID")
 
-    let existingData = localStorage.getItem("Data");
 
-    if (existingData === null) {
-      // Parse the existing data (assuming it's JSON)
-      existingData = JSON.parse(existingData);
+    // // Create a URLSearchParams object from the URL's query string
+    // let searchParams = new URLSearchParams(url.split("?")[1]);
 
-      // Update the 'referrals' value
-      existingData.referrals += 1;
+    // // Get the value of the 'referral_id' parameter
+    // let referralz = searchParams.get("referral_id");
+    // referralId = referralz;
 
-      // Save the updated data back to localStorage
-      localStorage.setItem("Data", JSON.stringify(existingData));
+    // let existingData = localStorage.getItem("Data");
 
-      console.log("Referrals increased successfully:", existingData);
-    } else {
-    }
+    // if (existingData === null) {
+    //   // Parse the existing data (assuming it's JSON)
+    //   existingData = JSON.parse(existingData);
+
+    //   // Update the 'referrals' value
+    //   existingData.referrals += 1;
+
+    //   // Save the updated data back to localStorage
+    //   localStorage.setItem("Data", JSON.stringify(existingData));
+
+    //   console.log("Referrals increased successfully:", existingData);
+    // } else {
+    // }
   }
 });
 
@@ -269,7 +311,7 @@ function validateInputs() {
   if (xClickedz && tClickedz && retweetz && teleConf && addConf) {
     // Proceed with your logic here
     //addValue is the Address number
-   
+
     function reader() {
       // console.log("READDDDD", currentUser[addValue]?.address)
 
@@ -280,82 +322,92 @@ function validateInputs() {
 
       // console.log(addValue !== currentAddress);
 
-      var wow = ""
+      var wow = "";
       const q = query(
         ref(database, "users/"),
         orderByChild("address"),
         equalTo(addValue)
       );
-      
+
       get(q).then((snapshot) => {
         console.log(snapshot.val());
         console.log(typeof snapshot.val());
         let currentUserz = snapshot.val();
-        
-        wow = currentUserz
+
+        wow = currentUserz;
         // checkerz(wow); // Pass wow as an argument to checkerz
         // console.log("WOOOOOOW", window.wow);
-        console.log("Windoooo", wow)
-        console.log("GIIIIII",typeof wow === 'object' && wow === null)
+        console.log("Windoooo", wow);
+        console.log("GIIIIII", typeof wow === "object" && wow === null);
 
-        
-      if (typeof wow === 'object' && wow === null) {
-        // alert("ERROR: Address mismatch");
-        referralId = generateShortUUID();
-        referrals = 0;
+        if (typeof wow === "object" && wow === null) {
+          // alert("ERROR: Address mismatch");
+          referralId = generateShortUUID();
+          referrals = 0;
 
-        var data = {
-          address: addValue,
-          telegram: telUsername,
-          referrals: referrals,
-          referralId: referralId,
-        };
+          var data = {
+            address: addValue,
+            telegram: telUsername,
+            referrals: referrals,
+            referralId: referralId,
+          };
 
-        // let jsonString = JSON.stringify(data); //Json covert data
+          // let jsonString = JSON.stringify(data); //Json covert data
 
-        function sendDataToFirebase(data) {
-          set(ref(database, "users/" + addValue), data)
-            .then()
-            .catch((error) => {
-              alert(error);
-            });
+          function sendDataToFirebase(data) {
+            set(ref(database, "users/" + addValue), data)
+              .then()
+              .catch((error) => {
+                alert(error);
+              });
+          }
+
+          // Example usage: send JSON data to Firebase
+          sendDataToFirebase(data);
+
+          // var tappy = `Data-${referralId}`
+
+          // if (localStorage.getItem(tappy) === null) {
+          //   localStorage.setItem(tappy, JSON.stringify(data));
+          // } else {
+          //   console.log("Local storage is not empty");
+          // }
+        } else {
+          let newRef = "EMpty";
+          let newReferers = 0;
+
+          let currentUser;
+          const q = query(
+            ref(database, "users/"),
+            orderByChild("address"),
+            equalTo(addValue)
+          );
+
+          get(q).then((snapshot) => {
+            console.log(snapshot.val());
+            currentUser = snapshot.val();
+            console.log("CURRRRRRENT", currentUser[addValue]);
+            var wow = currentUser[addValue];
+            // reader(fine);
+            console.log("CURRRRRRENT", wow?.referrals);
+
+            newRef = wow?.referralId;
+            newReferers = wow?.referrals;
+
+            console.log("Inside block", wow?.address);
+
+            var tappy = `Data-${newRef}`
+
+          // if (localStorage.getItem(tappy) === null) {
+          //   localStorage.setItem(tappy, JSON.stringify(wow));
+          // } else {
+          //   console.log("Local storage is not empty");
+          // }
+            updateUI(newRef, newReferers);
+
+          });
         }
-
-        // Example usage: send JSON data to Firebase
-        sendDataToFirebase(data);
-      } else {
-        let newRef = "EMpty";
-        let newReferers = 0;
-    
-        let currentUser;
-        const q = query(
-          ref(database, "users/"),
-          orderByChild("address"),
-          equalTo(addValue)
-        );
-
-        get(q).then((snapshot) => {
-          console.log(snapshot.val());
-          currentUser = snapshot.val();
-          console.log("CURRRRRRENT", currentUser[addValue]);
-          var wow = currentUser[addValue];
-          // reader(fine);
-          console.log("CURRRRRRENT", wow?.referrals);
-
-          newRef = wow?.referralId;
-          newReferers = wow?.referrals;
-
-          console.log("Inside block", wow?.address);
-          updateUI(newRef,newReferers)
-        });
-      }
       });
-      
-     
-      
-    
-
-     
     }
 
     reader();
