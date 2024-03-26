@@ -3,6 +3,33 @@ let tClickz = document.getElementById("ticon");
 var btn1 = document.getElementsByClassName("btn1")[0];
 var btn2 = document.getElementsByClassName("btn2")[0];
 
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+
+import {
+  getDatabase,
+  ref,
+  set,
+  query,
+  orderByChild,
+  equalTo,
+  get,
+  onValue,
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNCDMo7U64PrDFlwWztppytJT53pz9zWM",
+  authDomain: "rat-proj-67e65.firebaseapp.com",
+  databaseURL: "https://rat-proj-67e65-default-rtdb.firebaseio.com",
+  projectId: "rat-proj-67e65",
+  storageBucket: "rat-proj-67e65.appspot.com",
+  messagingSenderId: "746400213252",
+  appId: "1:746400213252:web:6e34a45ae0a1dd73e90851",
+};
+
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+const userRef = ref(database, "users");
+
 var retweetz = false;
 var teleConf = false;
 var addConf = false;
@@ -16,7 +43,6 @@ window.addEventListener("load", function () {
   let url = currentURL;
 
   if (currentURL == null) {
-
   } else {
     // Create a URLSearchParams object from the URL's query string
     let searchParams = new URLSearchParams(url.split("?")[1]);
@@ -25,24 +51,29 @@ window.addEventListener("load", function () {
     let referralz = searchParams.get("referral_id");
     referralId = referralz;
 
-    let existingData = localStorage.getItem('Data');
+    let existingData = localStorage.getItem("Data");
 
     if (existingData === null) {
       // Parse the existing data (assuming it's JSON)
       existingData = JSON.parse(existingData);
-    
+
       // Update the 'referrals' value
       existingData.referrals += 1;
-    
+
       // Save the updated data back to localStorage
-      localStorage.setItem('Data', JSON.stringify(existingData));
-    
-      console.log('Referrals increased successfully:', existingData);
-  }else{
-    
+      localStorage.setItem("Data", JSON.stringify(existingData));
+
+      console.log("Referrals increased successfully:", existingData);
+    } else {
+    }
   }
-}
 });
+
+const jsonData = {
+  name: "John Doe",
+  email: "johndoe@example.com",
+  age: 30,
+};
 
 var xClickedz = false;
 var tClickedz = false;
@@ -238,132 +269,219 @@ function validateInputs() {
   if (xClickedz && tClickedz && retweetz && teleConf && addConf) {
     // Proceed with your logic here
     //addValue is the Address number
+   
+    function reader() {
+      // console.log("READDDDD", currentUser[addValue]?.address)
 
-    
+      // console.log(currentUser);
+      // var currentAddress = currentUser?.address;
 
-    let myData = localStorage.getItem('Data');
+      // console.log(currentUser?.referralId);
 
-      myData = JSON.parse(myData)
+      // console.log(addValue !== currentAddress);
 
-    
-
-      console.log(myData)
-
-    Giveaway.innerHTML = "Successfully Participated";
-    clearTask.style.display = "none";
-    closeTask.style.display = "none";
-
-    let paragraph = document.createElement("p");
-
-    let strongElement = document.createElement("strong");
-    strongElement.textContent = "Referrals ID:";
-    paragraph.appendChild(strongElement);
-
-    paragraph.appendChild(document.createTextNode(` ${myData.referralId}`));
-
-    paragraph.setAttribute("id", "success");
-
-    let form = document.getElementById("airdrop-form");
-
-    form.appendChild(paragraph);
-
-    let Newparagraph = document.createElement("p");
-    var old = document.getElementById("success");
-    let strongElement2 = document.createElement("strong");
-    strongElement2.textContent = "RAT BALANCE :";
-    Newparagraph.appendChild(strongElement2);
-    Newparagraph.appendChild(document.createTextNode(" 5000 $RAT"));
-    Newparagraph.setAttribute("id", "ratu");
-    old.appendChild(Newparagraph);
-
-    let Newparagraph2 = document.createElement("p");
-    var old = document.getElementById("success");
-    let strongElement3 = document.createElement("strong");
-    strongElement3.textContent = "Referrals : ";
-    Newparagraph2.appendChild(strongElement3);
-    Newparagraph2.appendChild(document.createTextNode(` ${myData.referrals}`));
-    Newparagraph2.setAttribute("id", "ref");
-    old.appendChild(Newparagraph2);
-
-    let Newparagraph3 = document.createElement("p");
-    var old = document.getElementById("success");
-    let strongElement4 = document.createElement("strong");
-    strongElement4.textContent = "Share Referral Link :";
-    Newparagraph3.appendChild(strongElement4);
-    Newparagraph3.setAttribute("id", "shareref");
-    old.appendChild(Newparagraph3);
-
-    let Newparagraph4 = document.createElement("p");
-    var old = document.getElementById("success");
-    Newparagraph4.textContent = "Share your referral link:";
-    Newparagraph4.setAttribute("id", "sharetxt");
-    old.appendChild(Newparagraph4);
-
-    let inputElement = document.createElement("textarea");
-    inputElement.setAttribute("type", "text");
-    inputElement.setAttribute("name", "Refinput");
-    inputElement.setAttribute("id", "Inputref");
-    inputElement.readOnly = true;
-    // Make the textarea resizable
-    inputElement.style.resize = "both";
-    inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${myData.referralId}`;
-    old.appendChild(inputElement);
-
-    let Newparagraph5 = document.createElement("p");
-    var old = document.getElementById("success");
-    Newparagraph5.textContent = "Copy";
-    Newparagraph5.setAttribute("id", "CopyBtn");
-    old.appendChild(Newparagraph5);
-
-    Newparagraph5.addEventListener("click", function () {
-      var copyText = document.querySelector("#Inputref");
-      copyText.select();
-      document.execCommand("copy");
-      noti.style.display = "block";
-      setTimeout(function () {
-        noti.style.display = "none";
-      }, 1500);
-    });
-
-    let Newparagraph6 = document.createElement("p");
-    let imageElement = document.createElement("img");
-    imageElement.src = "./twitter.png";
-    var old = document.getElementById("success");
-    Newparagraph6.appendChild(imageElement);
-
-    Newparagraph6.textContent = "Share on Twitter";
-    Newparagraph6.setAttribute("id", "TwitterBtn");
-    old.appendChild(Newparagraph6);
-
-    Newparagraph6.addEventListener("click", function () {
-      window.open(
-        `
-      http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`,
-        "_blank"
+      var wow = ""
+      const q = query(
+        ref(database, "users/"),
+        orderByChild("address"),
+        equalTo(addValue)
       );
-    });
-
-    if (false) {
-      alert('SEEEEE')
       
-      //featch data
-    } else {
-      if (localStorage.getItem("Data") !== null) {
-        let shortUUID = generateShortUUID();
-        referralId = shortUUID;
+      get(q).then((snapshot) => {
+        console.log(snapshot.val());
+        console.log(typeof snapshot.val());
+        let currentUserz = snapshot.val();
+        
+        wow = currentUserz
+        // checkerz(wow); // Pass wow as an argument to checkerz
+        // console.log("WOOOOOOW", window.wow);
+        console.log("Windoooo", wow)
+        console.log("GIIIIII",typeof wow === 'object' && wow === null)
+
+        
+      if (typeof wow === 'object' && wow === null) {
+        // alert("ERROR: Address mismatch");
+        referralId = generateShortUUID();
+        referrals = 0;
+
+        var data = {
+          address: addValue,
+          telegram: telUsername,
+          referrals: referrals,
+          referralId: referralId,
+        };
+
+        // let jsonString = JSON.stringify(data); //Json covert data
+
+        function sendDataToFirebase(data) {
+          set(ref(database, "users/" + addValue), data)
+            .then()
+            .catch((error) => {
+              alert(error);
+            });
+        }
+
+        // Example usage: send JSON data to Firebase
+        sendDataToFirebase(data);
+      } else {
+        let newRef = "EMpty";
+        let newReferers = 0;
+    
+        let currentUser;
+        const q = query(
+          ref(database, "users/"),
+          orderByChild("address"),
+          equalTo(addValue)
+        );
+
+        get(q).then((snapshot) => {
+          console.log(snapshot.val());
+          currentUser = snapshot.val();
+          console.log("CURRRRRRENT", currentUser[addValue]);
+          var wow = currentUser[addValue];
+          // reader(fine);
+          console.log("CURRRRRRENT", wow?.referrals);
+
+          newRef = wow?.referralId;
+          newReferers = wow?.referrals;
+
+          console.log("Inside block", wow?.address);
+          updateUI(newRef,newReferers)
+        });
       }
-      let shortUUID = generateShortUUID();
-      var data = {
-        address: addValue,
-        telegram: telUsername,
-        referrals: referrals,
-        referralId: shortUUID,
-      };
+      });
+      
+     
+      
+    
 
-      let jsonString = JSON.stringify(data); //Json covert data
-
-      localStorage.setItem("Data", jsonString);
+     
     }
+
+    reader();
+
+    // let myData = localStorage.getItem('Data');
+
+    //   myData = JSON.parse(myData)
+
+    //   console.log(myData)
+    function updateUI(referralId, referrals) {
+      Giveaway.innerHTML = "Successfully Participated";
+      clearTask.style.display = "none";
+      closeTask.style.display = "none";
+
+      let paragraph = document.createElement("p");
+
+      let strongElement = document.createElement("strong");
+      strongElement.textContent = "Referrals ID:";
+      paragraph.appendChild(strongElement);
+
+      paragraph.appendChild(document.createTextNode(` ${referralId}`));
+
+      paragraph.setAttribute("id", "success");
+
+      let form = document.getElementById("airdrop-form");
+
+      form.appendChild(paragraph);
+
+      let Newparagraph = document.createElement("p");
+      var old = document.getElementById("success");
+      let strongElement2 = document.createElement("strong");
+      strongElement2.textContent = "RAT BALANCE :";
+      Newparagraph.appendChild(strongElement2);
+      Newparagraph.appendChild(document.createTextNode(" 5000 $RAT"));
+      Newparagraph.setAttribute("id", "ratu");
+      old.appendChild(Newparagraph);
+
+      let Newparagraph2 = document.createElement("p");
+      var old = document.getElementById("success");
+      let strongElement3 = document.createElement("strong");
+      strongElement3.textContent = "Referrals : ";
+      Newparagraph2.appendChild(strongElement3);
+      Newparagraph2.appendChild(document.createTextNode(` ${referrals}`));
+      Newparagraph2.setAttribute("id", "ref");
+      old.appendChild(Newparagraph2);
+
+      let Newparagraph3 = document.createElement("p");
+      var old = document.getElementById("success");
+      let strongElement4 = document.createElement("strong");
+      strongElement4.textContent = "Share Referral Link :";
+      Newparagraph3.appendChild(strongElement4);
+      Newparagraph3.setAttribute("id", "shareref");
+      old.appendChild(Newparagraph3);
+
+      let Newparagraph4 = document.createElement("p");
+      var old = document.getElementById("success");
+      Newparagraph4.textContent = "Share your referral link:";
+      Newparagraph4.setAttribute("id", "sharetxt");
+      old.appendChild(Newparagraph4);
+
+      let inputElement = document.createElement("textarea");
+      inputElement.setAttribute("type", "text");
+      inputElement.setAttribute("name", "Refinput");
+      inputElement.setAttribute("id", "Inputref");
+      inputElement.readOnly = true;
+      // Make the textarea resizable
+      inputElement.style.resize = "both";
+      inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${referralId}`;
+      old.appendChild(inputElement);
+
+      let Newparagraph5 = document.createElement("p");
+      var old = document.getElementById("success");
+      Newparagraph5.textContent = "Copy";
+      Newparagraph5.setAttribute("id", "CopyBtn");
+      old.appendChild(Newparagraph5);
+
+      Newparagraph5.addEventListener("click", function () {
+        var copyText = document.querySelector("#Inputref");
+        copyText.select();
+        document.execCommand("copy");
+        noti.style.display = "block";
+        setTimeout(function () {
+          noti.style.display = "none";
+        }, 1500);
+      });
+
+      let Newparagraph6 = document.createElement("p");
+      let imageElement = document.createElement("img");
+      imageElement.src = "./twitter.png";
+      var old = document.getElementById("success");
+      Newparagraph6.appendChild(imageElement);
+
+      Newparagraph6.textContent = "Share on Twitter";
+      Newparagraph6.setAttribute("id", "TwitterBtn");
+      old.appendChild(Newparagraph6);
+
+      Newparagraph6.addEventListener("click", function () {
+        window.open(
+          `
+      http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`,
+          "_blank"
+        );
+      });
+    }
+
+    // if (false) {
+    //   alert('SEEEEE')
+
+    //   //featch data
+    // } else {
+    //   if (localStorage.getItem("Data") !== null) {
+    //     let shortUUID = generateShortUUID();
+    //     referralId = shortUUID;
+    //   }
+    //   let shortUUID = generateShortUUID();
+    //   var data = {
+    //     address: addValue,
+    //     telegram: telUsername,
+    //     referrals: referrals,
+    //     referralId: shortUUID,
+    //   };
+
+    //   let jsonString = JSON.stringify(data); //Json covert data
+
+    //   localStorage.setItem("Data", jsonString);
+    // }
   }
 }
 
