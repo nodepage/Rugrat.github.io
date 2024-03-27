@@ -3,7 +3,7 @@ let tClickz = document.getElementById("ticon");
 var btn1 = document.getElementsByClassName("btn1")[0];
 var btn2 = document.getElementsByClassName("btn2")[0];
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { initializeApp} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 
 import {
   getDatabase,
@@ -16,6 +16,9 @@ import {
   get,
   onValue,
 } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+
+import { getAuth, createUserWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js'
 
 const firebaseConfig = {
   apiKey: "AIzaSyBNCDMo7U64PrDFlwWztppytJT53pz9zWM",
@@ -30,6 +33,15 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const userRef = ref(database, "users");
+
+
+console.log(getAuth)
+
+
+const auth = getAuth(app)
+
+
+console.log("SEEEEEEE", auth)
 
 var retweetz = false;
 var teleConf = false;
@@ -378,6 +390,19 @@ function validateInputs() {
           referralId = generateShortUUID();
           referrals = 0;
 
+          createUserWithEmailAndPassword(auth,"referralId", "addValue")
+          .then((userCredential) => {
+            // User signed up successfully
+            const user = userCredential.addValue;
+            console.log("User signed up:", user);
+          })
+          .catch((error) => {
+            // Handle sign-up errors
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error("Sign-up error:", errorCode, errorMessage);
+          });
+
           var data = {
             address: addValue,
             telegram: telUsername,
@@ -480,7 +505,7 @@ function validateInputs() {
       let Newparagraph2 = document.createElement("p");
       var old = document.getElementById("success");
       let strongElement3 = document.createElement("strong");
-      strongElement3.textContent = "Referrals : ";
+      strongElement3.textContent = "Referral Points : ";
       Newparagraph2.appendChild(strongElement3);
       Newparagraph2.appendChild(document.createTextNode(` ${referrals}`));
       Newparagraph2.setAttribute("id", "ref");
@@ -670,7 +695,7 @@ function validateLogin() {
             let Newparagraph2 = document.createElement("p");
             var old = document.getElementById("success");
             let strongElement3 = document.createElement("strong");
-            strongElement3.textContent = "Referrals : ";
+            strongElement3.textContent = "Referral Points : ";
             Newparagraph2.appendChild(strongElement3);
             Newparagraph2.appendChild(document.createTextNode(` ${referrals}`));
             Newparagraph2.setAttribute("id", "ref");
