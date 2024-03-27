@@ -83,7 +83,7 @@ window.addEventListener("load", function () {
             var referrals = childSnapshot.val().referrals;
             var referralId = childSnapshot.val().referralId;
 
-            referrals += 1;
+            referrals += 5;
 
             console.log("Address: ", address);
             console.log("Telegram: ", telegram);
@@ -96,7 +96,7 @@ window.addEventListener("load", function () {
               referralId: referralId,
             };
 
-            console.log("FOOOL: " + newData);
+            console.log("FOOOL: ", newData);
 
             localStorage.setItem(tappy, JSON.stringify(newData));
             sendDataToFirebase(newData);
