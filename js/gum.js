@@ -35,7 +35,7 @@ var retweetz = false;
 var teleConf = false;
 var addConf = false;
 var referrals = 0;
-// var referralId = null;
+var referralId;
 
 window.addEventListener("load", function () {
   let currentURL = window.location.href;
