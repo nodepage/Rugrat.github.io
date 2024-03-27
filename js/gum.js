@@ -11,6 +11,7 @@ import {
   set,
   query,
   orderByChild,
+  orderByKey,
   equalTo,
   get,
   onValue,
@@ -46,45 +47,76 @@ window.addEventListener("load", function () {
   // Get the value of the 'referral_id' parameter
   let referralz = searchParams.get("referral_id");
 
-  console.log("CurrentURRRRL",referralz !== null)
-
+  console.log("CurrentURRRRL", referralz !== null);
 
   if (referralz !== null) {
-   
-    
-    
-    console.log("MIDO", typeof referralz)
+    console.log("MIDO", typeof referralz);
 
     const q = query(
       ref(database, "users/"),
       orderByChild("referralId"),
       equalTo(referralz)
     );
-    console.log("MIDO2", referralz)
+
+    console.log("MIDO2", referralz);
 
     get(q).then((snapshot) => {
       console.log(snapshot.val());
       console.log(typeof snapshot.val());
       let currentUserz = snapshot.val();
 
-      var tappy = `Data-${referralz}`
+      var tappy = `Data-${referralz}`;
 
-      console.log("KUKUKUK", currentUserz)
-
+      console.log("KUKUKUK", currentUserz);
 
       if (localStorage.getItem(tappy) === null) {
-        localStorage.setItem(tappy, JSON.stringify(currentUserz));
+        const q = query(
+          ref(database, "users/"),
+          orderByChild("referralId"),
+          equalTo(referralz)
+        );
+
+        get(q).then((snapshot) => {
+          snapshot.forEach(function (childSnapshot) {
+            var address = childSnapshot.val().address;
+            var telegram = childSnapshot.val().telegram;
+            var referrals = childSnapshot.val().referrals;
+            var referralId = childSnapshot.val().referralId;
+
+            referrals += 1;
+
+            console.log("Address: ", address);
+            console.log("Telegram: ", telegram);
+            console.log("referrals: ", referrals);
+
+            var newData = {
+              address: address,
+              telegram: telegram,
+              referrals: referrals,
+              referralId: referralId,
+            };
+
+            console.log("FOOOL: " + newData);
+
+            localStorage.setItem(tappy, JSON.stringify(newData));
+            sendDataToFirebase(newData);
+
+            function sendDataToFirebase(data) {
+              set(ref(database, "users/" + address), data)
+                .then()
+                .catch((error) => {
+                  alert(error);
+                });
+            }
+          });
+        });
       } else {
         console.log("Local storage is not empty");
       }
-      console.log("URL REF", referralz)
+      console.log("URL REF", referralz);
     });
-    
-    
   } else {
-
-    console.log("URL DO NOT HAVE ID")
-
+    console.log("URL DO NOT HAVE ID");
 
     // // Create a URLSearchParams object from the URL's query string
     // let searchParams = new URLSearchParams(url.split("?")[1]);
@@ -396,15 +428,14 @@ function validateInputs() {
 
             console.log("Inside block", wow?.address);
 
-            var tappy = `Data-${newRef}`
+            var tappy = `Data-${newRef}`;
 
-          // if (localStorage.getItem(tappy) === null) {
-          //   localStorage.setItem(tappy, JSON.stringify(wow));
-          // } else {
-          //   console.log("Local storage is not empty");
-          // }
+            // if (localStorage.getItem(tappy) === null) {
+            //   localStorage.setItem(tappy, JSON.stringify(wow));
+            // } else {
+            //   console.log("Local storage is not empty");
+            // }
             updateUI(newRef, newReferers);
-
           });
         }
       });
