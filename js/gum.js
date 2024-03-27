@@ -169,6 +169,7 @@ var xWarn = document.getElementById("xfollw-warning");
 var tWarn = document.getElementById("twarning");
 var airdropBtn = document.getElementById("airdropsubmitbtn");
 var retweetWarn = document.getElementById("xwarning");
+var Eachx = document.getElementById("eachz");
 
 var telUserWarn = document.getElementById("tuserWarning");
 var clearTask = document.getElementById("taskz");
@@ -575,3 +576,89 @@ function generateShortUUID() {
   }
   return uuid;
 }
+
+
+var logBtn = document.getElementById('btnLog')
+
+var logDash = document.getElementById('logCot')
+
+
+
+var LoginSub = document.getElementById('Logsub')
+
+var loginErr = document.getElementById('logError')
+
+
+
+
+logBtn.addEventListener("click", function () {
+
+  logDash.style.display = 'block'
+  closeTask.style.display = 'none'
+  closeTask.style.visibility= "hidden"
+  Giveaway.style.display = 'none'
+  Eachx.style.display = 'none'
+  clearTask.innerHTML = "Login To Your $RAT Dashboard"
+
+
+
+});
+
+
+LoginSub.addEventListener("click", function (event) {
+  event.preventDefault()
+  validateLogin();
+
+});
+
+document.getElementById("logPut").addEventListener("input", function () {
+  validateLogin();
+});
+
+
+
+function validateLogin(){
+  var LogInfo = document.getElementById("logPut").value.trim()
+
+  var checkEmpty = false;
+  var userExist = false
+
+  if(LogInfo === ''){
+    loginErr.innerHTML = "Enter your Solana wallet" 
+  }else{
+    checkEmpty = true
+  }
+
+
+  
+
+  const q = query(
+    ref(database, "users/"),
+    orderByChild("address"),
+    equalTo(LogInfo)
+  );
+  
+  get(q).then((snapshot) => {
+    snapshot.forEach(function (childSnapshot) {
+      var address = childSnapshot.val().address;
+      var telegram = childSnapshot.val().telegram;
+      var referrals = childSnapshot.val().referrals;
+      var referralId = childSnapshot.val().referralId;
+  });
+    console.log("LOGIN", LogInfo)
+
+    console.log("LOGIN2", snapshot)
+
+
+   
+  
+  });
+
+  if(checkEmpty && userExist){
+
+  }
+
+}
+
+
+
