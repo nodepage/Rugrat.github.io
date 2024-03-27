@@ -35,7 +35,7 @@ var retweetz = false;
 var teleConf = false;
 var addConf = false;
 var referrals = 0;
-var referralId = null;
+// var referralId = null;
 
 window.addEventListener("load", function () {
   let currentURL = window.location.href;
@@ -577,88 +577,171 @@ function generateShortUUID() {
   return uuid;
 }
 
-
-var logBtn = document.getElementById('btnLog')
-
-var logDash = document.getElementById('logCot')
-
-
-
-var LoginSub = document.getElementById('Logsub')
-
-var loginErr = document.getElementById('logError')
-
-
-
+var logBtn = document.getElementById("btnLog");
+var logDash = document.getElementById("logCot");
+var LoginSub = document.getElementById("Logsub");
+var loginErr = document.getElementById("logError");
 
 logBtn.addEventListener("click", function () {
-
-  logDash.style.display = 'block'
-  closeTask.style.display = 'none'
-  closeTask.style.visibility= "hidden"
-  Giveaway.style.display = 'none'
-  Eachx.style.display = 'none'
-  clearTask.innerHTML = "Login To Your $RAT Dashboard"
-
-
-
+  logDash.style.display = "block";
+  closeTask.style.display = "none";
+  closeTask.style.visibility = "hidden";
+  Giveaway.style.display = "none";
+  Eachx.style.display = "none";
+  clearTask.innerHTML = "Login To Your $RAT Dashboard";
 });
 
-
 LoginSub.addEventListener("click", function (event) {
-  event.preventDefault()
+  event.preventDefault();
   validateLogin();
-
 });
 
 document.getElementById("logPut").addEventListener("input", function () {
   validateLogin();
 });
 
+function validateLogin() {
+  var LogInfo = document.getElementById("logPut").value.trim();
+  var checkNotEmpty = false;
+  var userExist = false;
 
-
-function validateLogin(){
-  var LogInfo = document.getElementById("logPut").value.trim()
-
-  var checkEmpty = false;
-  var userExist = false
-
-  if(LogInfo === ''){
-    loginErr.innerHTML = "Enter your Solana wallet" 
-  }else{
-    checkEmpty = true
+  if (LogInfo === "") {
+    loginErr.innerHTML = "Enter your Solana wallet";
+  } else {
+    checkNotEmpty = true;
+    loginErr.innerHTML = ""; // Clear error message when input is not empty
   }
 
+  if (checkNotEmpty) {
+    const q = query(
+      ref(database, "users/"),
+      orderByChild("address"),
+      equalTo(LogInfo)
+    );
 
+    get(q).then((snapshot) => {
+      snapshot.forEach(function (childSnapshot) {
+        userExist = true; // Set userExist to true if there is a matching user in the database
+        var address = childSnapshot.val().address;
+        var telegram = childSnapshot.val().telegram;
+        var referrals = childSnapshot.val().referrals;
+        var referralId = childSnapshot.val().referralId;
+        console.log("User Exists with Address:", referralId);
+
+        if (!userExist) {
+          loginErr.innerHTML = "User does not exist"; // Display error message if user doesn't exist
+        }
   
+        console.log("LOGIN", checkNotEmpty);
+        console.log("LOGIN2", userExist);
 
-  const q = query(
-    ref(database, "users/"),
-    orderByChild("address"),
-    equalTo(LogInfo)
-  );
+        if (checkNotEmpty && userExist) {
+          updateUI(referralId, referrals);
   
-  get(q).then((snapshot) => {
-    snapshot.forEach(function (childSnapshot) {
-      var address = childSnapshot.val().address;
-      var telegram = childSnapshot.val().telegram;
-      var referrals = childSnapshot.val().referrals;
-      var referralId = childSnapshot.val().referralId;
-  });
-    console.log("LOGIN", LogInfo)
-
-    console.log("LOGIN2", snapshot)
-
-
-   
+          function updateUI(referralId, referrals) {
+            logDash.style.display = 'none'
+            Giveaway.innerHTML = "Successfully Participated";
+            clearTask.style.display = "none";
+            closeTask.style.display = "none";
   
-  });
+            let paragraph = document.createElement("p");
+  
+            let strongElement = document.createElement("strong");
+            strongElement.textContent = "Referrals ID:";
+            paragraph.appendChild(strongElement);
+  
+            paragraph.appendChild(document.createTextNode(` ${referralId}`));
+  
+            paragraph.setAttribute("id", "success");
+  
+            let form = document.getElementById("airdrop-form");
+  
+            form.appendChild(paragraph);
+  
+            let Newparagraph = document.createElement("p");
+            var old = document.getElementById("success");
+            let strongElement2 = document.createElement("strong");
+            strongElement2.textContent = "RAT BALANCE :";
+            Newparagraph.appendChild(strongElement2);
+            Newparagraph.appendChild(document.createTextNode(" 5000 $RAT"));
+            Newparagraph.setAttribute("id", "ratu");
+            old.appendChild(Newparagraph);
+  
+            let Newparagraph2 = document.createElement("p");
+            var old = document.getElementById("success");
+            let strongElement3 = document.createElement("strong");
+            strongElement3.textContent = "Referrals : ";
+            Newparagraph2.appendChild(strongElement3);
+            Newparagraph2.appendChild(document.createTextNode(` ${referrals}`));
+            Newparagraph2.setAttribute("id", "ref");
+            old.appendChild(Newparagraph2);
+  
+            let Newparagraph3 = document.createElement("p");
+            var old = document.getElementById("success");
+            let strongElement4 = document.createElement("strong");
+            strongElement4.textContent = "Share Referral Link :";
+            Newparagraph3.appendChild(strongElement4);
+            Newparagraph3.setAttribute("id", "shareref");
+            old.appendChild(Newparagraph3);
+  
+            let Newparagraph4 = document.createElement("p");
+            var old = document.getElementById("success");
+            Newparagraph4.textContent = "Share your referral link:";
+            Newparagraph4.setAttribute("id", "sharetxt");
+            old.appendChild(Newparagraph4);
+  
+            let inputElement = document.createElement("textarea");
+            inputElement.setAttribute("type", "text");
+            inputElement.setAttribute("name", "Refinput");
+            inputElement.setAttribute("id", "Inputref");
+            inputElement.readOnly = true;
+            // Make the textarea resizable
+            inputElement.style.resize = "both";
+            inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${referralId}`;
+            old.appendChild(inputElement);
+  
+            let Newparagraph5 = document.createElement("p");
+            var old = document.getElementById("success");
+            Newparagraph5.textContent = "Copy";
+            Newparagraph5.setAttribute("id", "CopyBtn");
+            old.appendChild(Newparagraph5);
+  
+            Newparagraph5.addEventListener("click", function () {
+              var copyText = document.querySelector("#Inputref");
+              copyText.select();
+              document.execCommand("copy");
+              noti.style.display = "block";
+              setTimeout(function () {
+                noti.style.display = "none";
+              }, 1500);
+            });
+  
+            let Newparagraph6 = document.createElement("p");
+            let imageElement = document.createElement("img");
+            imageElement.src = "./twitter.png";
+            var old = document.getElementById("success");
+            Newparagraph6.appendChild(imageElement);
+  
+            Newparagraph6.textContent = "Share on Twitter";
+            Newparagraph6.setAttribute("id", "TwitterBtn");
+            old.appendChild(Newparagraph6);
+  
+            Newparagraph6.addEventListener("click", function () {
+              window.open(
+                `
+            http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`,
+                "_blank"
+              );
+            });
+          }
+        }
+      });
 
-  if(checkEmpty && userExist){
-
+    
+      if (!userExist) {
+        loginErr.innerHTML = "User does not exist"; // Display error message if user doesn't exist
+      }
+      
+    });
   }
-
 }
-
-
-
