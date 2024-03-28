@@ -182,6 +182,7 @@ var tWarn = document.getElementById("twarning");
 var airdropBtn = document.getElementById("airdropsubmitbtn");
 var retweetWarn = document.getElementById("xwarning");
 var Eachx = document.getElementById("eachz");
+var Eachy = document.getElementById("eachx");
 
 var telUserWarn = document.getElementById("tuserWarning");
 var clearTask = document.getElementById("taskz");
@@ -613,6 +614,7 @@ logBtn.addEventListener("click", function () {
   closeTask.style.visibility = "hidden";
   Giveaway.style.display = "none";
   Eachx.style.display = "none";
+  Eachy.style.display = "none";
   clearTask.innerHTML = "Login To Your $RAT Dashboard";
 });
 
