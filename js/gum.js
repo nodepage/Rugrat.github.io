@@ -533,7 +533,7 @@ function validateInputs() {
       inputElement.readOnly = true;
       // Make the textarea resizable
       inputElement.style.resize = "both";
-      inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${referralId}`;
+      inputElement.value = `www.ratsonsol.com/airdrop?referral_id=${referralId}`;
       old.appendChild(inputElement);
 
       let Newparagraph5 = document.createElement("p");
@@ -565,7 +565,7 @@ function validateInputs() {
       Newparagraph6.addEventListener("click", function () {
         window.open(
           `
-      http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`,
+      http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/airdrop?referral_id=${referralId}`,
           "_blank"
         );
       });
@@ -724,7 +724,7 @@ function validateLogin() {
             inputElement.readOnly = true;
             // Make the textarea resizable
             inputElement.style.resize = "both";
-            inputElement.value = `www.ratsonsol.com/signup.htm?referral_id=${referralId}`;
+            inputElement.value = `www.ratsonsol.com/airdrop?referral_id=${referralId}`;
             old.appendChild(inputElement);
   
             let Newparagraph5 = document.createElement("p");
@@ -756,7 +756,7 @@ function validateLogin() {
             Newparagraph6.addEventListener("click", function () {
               window.open(
                 `
-            http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/signup.htm?referral_id=${referralId}`,
+            http://twitter.com/share?text=AIRDROP GIVEAWAY, Win 20,000 $RAT EACH FOR TOP 500 REFERRAL&url=https://www.ratsonsol.com/airdrop?referral_id=${referralId}`,
                 "_blank"
               );
             });
